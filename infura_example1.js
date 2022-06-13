@@ -30,7 +30,7 @@ var subscription = web3.eth
     let data = JSON.stringify(transaction)
 
     
-    // Write File to Path to Directory
+    // Write File to Path to Directory; 
     fs.writeFile('/Users/---/TRANSACTIONS.txt', transaction, err => {
       if (err) {
         console.error(err);
