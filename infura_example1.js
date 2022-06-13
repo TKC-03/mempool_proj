@@ -27,7 +27,7 @@ var subscription = web3.eth
 
     let data = JSON.stringify(transaction)
 
-    fs.writeFile('/Users/dok92/test.txt', transaction, err => {
+    fs.writeFile('/Users/---/TRANSACTIONS.txt', transaction, err => {
       if (err) {
         console.error(err);
       }
