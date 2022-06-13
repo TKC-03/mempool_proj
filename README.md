@@ -1,5 +1,5 @@
 # mempool_proj
-mempool_proj
 
 
-Project for finding releveant txs in the mempool
+Project for Finding Relevant Pending Transaction hashes in the Ethereum Mempool
+
