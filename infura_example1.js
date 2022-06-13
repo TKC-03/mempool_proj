@@ -7,6 +7,8 @@ const fs = require('fs')
 
 let web3 = new Web3(
   new Web3.providers.WebsocketProvider(
+    
+    // You Need To Provide your Own Instance of an Ethereum Node; We are using Infura as a free service; It allows 100k free requests/day 
     `wss://mainnet.infura.io/ws/v3/<insert your own infura node ID>`,
   ),
 )
@@ -27,6 +29,8 @@ var subscription = web3.eth
 
     let data = JSON.stringify(transaction)
 
+    
+    // Write File to Path to Directory
     fs.writeFile('/Users/---/TRANSACTIONS.txt', transaction, err => {
       if (err) {
         console.error(err);
