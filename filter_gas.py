@@ -1,9 +1,8 @@
-
 from web3 import Web3
 
 
 w3 = Web3(Web3.HTTPProvider(
-    'https://ropsten.infura.io/v3/insert_your_endpoint'))
+    'https://mainnet.infura.io/v3/your_infura_endpoint'))
 a = w3.isConnected()
 
 print(a)
@@ -28,7 +27,9 @@ def filter_out_mempool():
                     relevant_txs['tx_hash'] = i
                     relevant_txs['gas'] = get['gas']
 
-                    if 40000 < get['gas'] and get['value']==0:
+
+                    if 40000 < get['gas'] and get['value'] == 0:
+
 
                         f.write(str(relevant_txs)+'\t\r')
 
@@ -43,4 +44,3 @@ def filter_out_mempool():
 
 if __name__ == '__main__':
     filter_out_mempool()
-         
