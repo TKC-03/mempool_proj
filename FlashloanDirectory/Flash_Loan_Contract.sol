@@ -3,36 +3,13 @@ import "./FlashLoanReceiverBase.sol";
 import "./ILendingPoolAddressesProvider.sol";
 import "./ILendingPool.sol";
 
-
-// Deploy on Remix IDE on a testnet    or Use a .py Script to deploy by utilizing Brownie; 
-// Brownie is a python framework for interacting with Smart Contracts on the Ethereum Decentralized Network/BlockChain/Virtual Machine
-
-
-// The FlashLoanV1 contract is inheriting from the FlashLoanReceiverBaseV1 contract.
 contract FlashloanV1 is FlashLoanReceiverBaseV1 {
 
-// We passed the address of one of the Lending Pool Providers of Aave. In this case, we are providing the address of DAI Lending Pool. 
-    constructor(address _addressProvider) FlashLoanReceiverBaseV1(_addressProvider) public{}
-
- /**
-        Flash loan 1000000000000000000 wei (1 ether) worth of `_asset`
-     */
-
-     //  We have defined a function called flashLoan. It takes the address of the asset we want to flash loan.
-     // In this case the asset is DAI.
-    
-
-    // A Function is basically an input/output; A function returns an Output
- function flashloan(address _asset) public onlyOwner {
-        bytes memory data = "";
-        uint amount = 1 ether;
-
-        ILendingPoolV1 lendingPool = ILendingPoolV1(addressesProvider.getLendingPool());
-        lendingPool.flashLoan(address(this), _asset, amount, data);
-    }
+                        // adddress for the lending pool                 adddress of the lender
+    constructor(address _addressProvider) FlashLoanReceiverBaseV1(_addressProvider) public {}
 
     /**
-  This function is called after your contract has received the flash loaned amount
+        This function is called after your contract has received the flash loaned amount
      */
     function executeOperation(
         address _reserve,
@@ -44,7 +21,8 @@ contract FlashloanV1 is FlashLoanReceiverBaseV1 {
         override
     {
         require(_amount <= getBalanceInternal(address(this), _reserve), "Invalid balance, was the flashLoan successful?");
-       //
+
+        //
         // Your logic goes here.
         // !! Ensure that *this contract* has enough of `_reserve` funds to payback the `_fee` !!
         //
@@ -53,4 +31,16 @@ contract FlashloanV1 is FlashLoanReceiverBaseV1 {
         transferFundsBackToPoolInternal(_reserve, totalDebt);
     }
 
-} 
+    /**
+        Flash loan 1000000000000000000 wei (1 ether) worth of `_asset`
+     */
+
+     // provide adddress of the Asset that you are borrowing from AAVE
+    function flashloan(address _asset) public onlyOwner {
+        bytes memory data = "";
+        uint amount = 1 ether;    // Going to ask for 1 ETH WORTH OF THE ASSET      18 zeros 1 ether worth of that token
+
+        ILendingPoolV1 lendingPool = ILendingPoolV1(addressesProvider.getLendingPool());
+        lendingPool.flashLoan(address(this), _asset, amount, data);
+    }
+}
