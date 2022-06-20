@@ -27,7 +27,9 @@ def filter_out_mempool():
                     relevant_txs['tx_hash'] = i
                     relevant_txs['gas'] = get['gas']
 
+
                     if 40000 < get['gas'] and get['value'] == 0:
+
 
                         f.write(str(relevant_txs)+'\t\r')
 
