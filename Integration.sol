@@ -32,11 +32,22 @@ contract FlashloanV1 is FlashLoanReceiverBaseV1 {
         transferFundsBackToPoolInternal(_reserve, totalDebt);
     }
     
+    function getAmountOutMin(address router, address _tokenIn, address _tokenOut, uint256 _amount) public view returns (uint256) {
+ 	 address[] memory path;
+  	path = new address[](2);
+  	path[0] = _tokenIn;
+ 	 path[1] = _tokenOut;
+  	uint256[] memory amountOutMins = IUniswapV2Router(router).getAmountsOut(_amount, path);
+ 	 return amountOutMins[path.length -1];
+	}
+    
     function estimateDualDexTrade(address _router1, address _router2, address _token1, address _token2, uint256 _amount) external view returns (uint256) {
  	 uint256 amtBack1 = getAmountOutMin(_router1, _token1, _token2, _amount);
  	 uint256 amtBack2 = getAmountOutMin(_router2, _token2, _token1, amtBack1);
  	 return amtBack2;
 	}
+	
+	
 
      function LookForDexArb(address _router1, address _router2, address _token1, address _token2, uint256 _amount) external onlyOwner {
          uint startBalance = IERC20(_token1).balanceOf(address(this));
